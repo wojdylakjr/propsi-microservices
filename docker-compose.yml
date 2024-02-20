@@ -1,0 +1,55 @@
+version: "3.8"
+services:
+  # JAVA SERVICES
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: ./Dockerfile
+    environment:
+      - SERVER_PORT=8081
+    ports:
+      - "8081:8081"
+    networks:
+      - spring-cloud-network
+    restart: on-failure
+
+  rental-service:
+    build:
+      context: ./rental-service
+      dockerfile: ./Dockerfile
+    environment:
+      - SERVER_PORT=8082
+    ports:
+      - "8082:8082"
+    networks:
+      - spring-cloud-network
+    restart: on-failure
+
+  property-service:
+    build:
+      context: ./property-service
+      dockerfile: ./Dockerfile
+    environment:
+      - SERVER_PORT=8083
+    ports:
+      - "8083:8083"
+    networks:
+      - spring-cloud-network
+    restart: on-failure
+
+  payment-service:
+    build:
+      context: ./payment-service
+      dockerfile: ./Dockerfile
+    environment:
+      - SERVER_PORT=8084
+    ports:
+      - "8084:8084"
+    networks:
+      - spring-cloud-network
+    restart: on-failure
+
+# NETWORK
+networks:
+  spring-cloud-network:
+    driver: bridge
