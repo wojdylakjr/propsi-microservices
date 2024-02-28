@@ -29,7 +29,6 @@ public class Property implements Serializable {
     @Column(name = "owner_id")
     private Long ownerId;
 
-
     @JsonIgnoreProperties(value = "property", allowSetters = true)
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "property", fetch = FetchType.LAZY)
     private Address address;
