@@ -30,7 +30,6 @@ public class PropertyCreator {
         }
 
         address.setProperty(property);
-        property.setAddress(address);
     }
 
     private void addFixedCosts(Property property) {
@@ -41,7 +40,6 @@ public class PropertyCreator {
             return;
         }
 
-        property.setFixedCosts(propertyFixedCosts);
         propertyFixedCosts.forEach(
                 propertyFixedCost -> propertyFixedCost.setProperty(property)
         );
@@ -54,7 +52,6 @@ public class PropertyCreator {
             return;
         }
 
-        property.setPremises(premises);
         premises.forEach(
                 prem -> {
                     premisesCreator.create(prem);
