@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.wojdylak.propertyservice.domain.Property;
 import pl.wojdylak.propertyservice.repository.PropertyRepository;
+import pl.wojdylak.propertyservice.service.creator.PropertyCreator;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package pl.wojdylak.propertyservice.service;
+package pl.wojdylak.propertyservice.service.creator;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

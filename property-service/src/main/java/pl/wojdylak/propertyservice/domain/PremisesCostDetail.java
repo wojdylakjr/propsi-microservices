@@ -2,12 +2,20 @@ package pl.wojdylak.propertyservice.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 @Table(name = "premises_cost_detail")
 public class PremisesCostDetail implements Serializable {
     @Id

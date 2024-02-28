@@ -1,4 +1,4 @@
-package pl.wojdylak.propertyservice.service;
+package pl.wojdylak.propertyservice.service.creator;
 
 import org.springframework.stereotype.Component;
 import pl.wojdylak.propertyservice.domain.Meter;

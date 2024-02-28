@@ -2,12 +2,20 @@ package pl.wojdylak.propertyservice.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.Instant;
 
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 @Table(name = "meter_measurement")
 public class MeterMeasurement implements Serializable {
 
@@ -44,5 +52,16 @@ public class MeterMeasurement implements Serializable {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "MeterMeasurement{" +
+                "id=" + id +
+                ", value=" + value +
+                ", date=" + date +
+                ", unit='" + unit + '\'' +
+                ", meter=" + meter.getId() +
+                '}';
     }
 }
