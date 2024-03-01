@@ -3,10 +3,10 @@ package pl.wojdylak.propertyservice.domain.dto;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public record CreatePremisesCostDetailRequestDto(
+public record PremisesCostsDetailsResponseDto(
         BigDecimal value,
-        Instant date,
         String unit,
-        Long premisesCostId
+        Instant date,
+        String costType
 ) {
 }
