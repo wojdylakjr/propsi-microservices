@@ -6,6 +6,7 @@ import pl.wojdylak.rentalservice.domain.Rental;
 import pl.wojdylak.rentalservice.repository.RentalRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,5 +19,9 @@ public class RentalService {
 
     public List<Rental> findAll() {
         return rentalRepository.findAll();
+    }
+
+    public Optional<Rental> findById(Long rentalId) {
+        return rentalRepository.findById(rentalId);
     }
 }

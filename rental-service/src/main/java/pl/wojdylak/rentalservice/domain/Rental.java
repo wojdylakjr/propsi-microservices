@@ -26,6 +26,9 @@ public class Rental implements Serializable {
     @Column(name = "tenant_id")
     private Long tenantId;
 
+    @Column(name = "owner_id")
+    private Long ownerId;
+
     @Column(name = "premises_id")
     private Long premisesId;
 

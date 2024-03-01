@@ -2,6 +2,9 @@ package pl.wojdylak.rentalservice.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -10,6 +13,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "bill")
 public class Bill implements Serializable {
     @Id
@@ -32,6 +38,18 @@ public class Bill implements Serializable {
     @JsonIgnoreProperties("bill")
     @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
     private Set<BillLineItem> billLineItems = new HashSet<>();
+
+    public Bill(Instant date, Rental rental) {
+        this.date = date;
+        this.rental = rental;
+    }
+
+    public void addBillLineItems(Set<BillLineItem> billLineItems) {
+        this.billLineItems = billLineItems;
+        this.totalPrice = billLineItems.stream()
+                .map(BillLineItem::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
     @Override
     public boolean equals(Object o) {
