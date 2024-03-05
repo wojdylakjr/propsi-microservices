@@ -1,10 +1,7 @@
 package pl.wojdylak.rentalservice.resource;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.wojdylak.rentalservice.domain.dto.BillResponseDto;
 import pl.wojdylak.rentalservice.domain.dto.CreateBillDto;
 import pl.wojdylak.rentalservice.service.BillService;
@@ -26,8 +23,8 @@ public class BillResource {
         return billService.findAll();
     }
 
-//    @GetMapping(("/bills/{id}"))
-//    public List<Bill> getAllBills(@PathVariable Long id) {
-//        return billService.findAll();
-//    }
+    @GetMapping(("/bills/{id}"))
+    public BillResponseDto getBillById(@PathVariable Long id) {
+        return billService.findBillById(id);
+    }
 }

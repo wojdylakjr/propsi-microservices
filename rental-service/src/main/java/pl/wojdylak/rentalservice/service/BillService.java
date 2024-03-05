@@ -27,6 +27,11 @@ public class BillService {
         return billRepository.findAllBillDto();
     }
 
+    public BillResponseDto findBillById(Long id) {
+        return billRepository.findBillDtoById(id)
+                .orElseThrow();
+    }
+
     public void createBill(CreateBillDto createBillDto) {
 
         Rental rental = rentalService.findById(createBillDto.rentalId())
