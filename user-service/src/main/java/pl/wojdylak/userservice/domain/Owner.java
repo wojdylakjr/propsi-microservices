@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,13 +28,6 @@ public class Owner implements Serializable {
     @Column(name = "payU_client_secret")
     private String payUClientSecret;
 
-    @JsonIgnore
-    @Column(name = "payU_access_token")
-    private String payUAccessToken;
-
-    @JsonIgnore
-    @Column(name = "payU_access_token_expiration")
-    private Instant payUAccessTokenExpiration;
     @JsonIgnore
     @ManyToMany(mappedBy = "owners")
     private Set<User> users = new HashSet<>();
