@@ -22,5 +22,4 @@ public class UserResource {
     public User createUser(@RequestBody User user) {
         return userService.save(user);
     }
-
 }
