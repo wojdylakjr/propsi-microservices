@@ -2,6 +2,7 @@ version: "3.8"
 services:
   # JAVA SERVICES
   user-service:
+    image: jwojdylak/propsi-microservices-user-service:latest  # Specify the image name and tag
     build:
       context: ./user-service
       dockerfile: ./Dockerfile
@@ -14,6 +15,7 @@ services:
     restart: on-failure
 
   property-service:
+    image: jwojdylak/propsi-microservices-property-service:latest  # Specify the image name and tag
     build:
       context: ./property-service
       dockerfile: ./Dockerfile
@@ -26,6 +28,7 @@ services:
     restart: on-failure
 
   rental-service:
+    image: jwojdylak/propsi-microservices-rental-service:latest  # Specify the image name and tag
     build:
       context: ./rental-service
       dockerfile: ./Dockerfile
@@ -38,6 +41,7 @@ services:
     restart: on-failure
 
   payment-service:
+    image: jwojdylak/propsi-microservices-payment-service:latest  # Specify the image name and tag
     build:
       context: ./payment-service
       dockerfile: ./Dockerfile
@@ -45,6 +49,19 @@ services:
       - SERVER_PORT=8084
     ports:
       - "8084:8084"
+    networks:
+      - spring-cloud-network
+    restart: on-failure
+
+  api-gateway-service:
+    image: jwojdylak/propsi-microservices-api-gateway:latest
+    build:
+      context: ./api-gateway
+      dockerfile: ./Dockerfile
+    environment:
+      - SERVER_PORT=8080
+    ports:
+      - "8080:8080"
     networks:
       - spring-cloud-network
     restart: on-failure

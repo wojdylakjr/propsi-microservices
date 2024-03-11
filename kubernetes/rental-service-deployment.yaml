@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rental-service
+  labels:
+    app: rental-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rental-service
+  template:
+    metadata:
+      labels:
+        app: rental-service
+    spec:
+      containers:
+        - name: rental-service
+          image: jwojdylak/propsi-microservices-rental-service:latest
+          ports:
+            - containerPort: 8083
+          env:
+            - name: SERVER_PORT
+              value: "8083"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rental-service
+  name: rental-service
+spec:
+  ports:
+    - name: 8083-8083
+      port: 8083
+      protocol: TCP
+      targetPort: 8083
+  selector:
+    app: rental-service
+  type: ClusterIP
