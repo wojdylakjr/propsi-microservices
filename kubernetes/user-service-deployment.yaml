@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  labels:
+    app: user-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: jwojdylak/propsi-microservices-user-service:LATEST
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SERVER_PORT
+              value: "8081"
+
+
+#kubectl create deployment demo --image=jwojdylak/propsi-microservices-user-service:LATEST --dry-run -o=yaml > deployment.yaml
+#echo --- >> deployment.yaml
+#kubectl create service clusterip demo --tcp=8081:8081 --dry-run -o=yaml >> deployment.yaml

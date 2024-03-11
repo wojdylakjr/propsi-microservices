@@ -13,9 +13,9 @@ services:
       - spring-cloud-network
     restart: on-failure
 
-  rental-service:
+  property-service:
     build:
-      context: ./rental-service
+      context: ./property-service
       dockerfile: ./Dockerfile
     environment:
       - SERVER_PORT=8082
@@ -25,9 +25,9 @@ services:
       - spring-cloud-network
     restart: on-failure
 
-  property-service:
+  rental-service:
     build:
-      context: ./property-service
+      context: ./rental-service
       dockerfile: ./Dockerfile
     environment:
       - SERVER_PORT=8083
