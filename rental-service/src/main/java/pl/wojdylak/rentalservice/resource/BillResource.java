@@ -13,7 +13,7 @@ import java.util.List;
 public class BillResource {
     private final BillService billService;
 
-    @PostMapping(("create-bill"))
+    @PostMapping(("bills"))
     public void createBill(@RequestBody CreateBillDto createBillDto) {
         billService.createBill(createBillDto);
     }
