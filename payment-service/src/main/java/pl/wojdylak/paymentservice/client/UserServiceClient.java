@@ -1,6 +1,7 @@
 package pl.wojdylak.paymentservice.client;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -8,15 +9,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserServiceClient {
-    private static final String USER_SERVICE_URL = "http://localhost:8081";
+
+    @Value("${user.service.url}")
+    private String userServiceUrl;
 
     private final RestTemplate restTemplate;
 
     public OwnerResponseDto getOwnerById(Long ownerId) {
 
-        String url = USER_SERVICE_URL + "/owners/" + ownerId;
+        String url = userServiceUrl + "/owners/" + ownerId;
         ParameterizedTypeReference<OwnerResponseDto> responseType = new ParameterizedTypeReference<>() {
         };
 
