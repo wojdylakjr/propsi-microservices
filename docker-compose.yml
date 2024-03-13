@@ -1,8 +1,65 @@
 version: "3.8"
 services:
+  # DATABASES
+  user-db:
+    image: postgres:latest
+    container_name: user-db
+    environment:
+      - POSTGRES_DB=user_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    ports:
+      - "5432:5432"
+    networks:
+      - spring-cloud-network
+    volumes:
+      - postgres-user-data:/var/lib/postgresql/data
+
+  property-db:
+    image: postgres:latest
+    container_name: property-db
+    environment:
+      - POSTGRES_DB=property_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    ports:
+      - "5433:5432"
+    networks:
+      - spring-cloud-network
+    volumes:
+      - postgres-property-data:/var/lib/postgresql/data
+
+  rental-db:
+    image: postgres:latest
+    container_name: rental-db
+    environment:
+      - POSTGRES_DB=rental_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    ports:
+      - "5434:5432"
+    networks:
+      - spring-cloud-network
+    volumes:
+      - postgres-rental-data:/var/lib/postgresql/data
+
+  payment-db:
+    image: postgres:latest
+    container_name: payment-db
+    environment:
+      - POSTGRES_DB=payment_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    ports:
+      - "5435:5432"
+    networks:
+      - spring-cloud-network
+    volumes:
+      - postgres-payment-data:/var/lib/postgresql/data
+
   # JAVA SERVICES
   user-service:
-    image: jwojdylak/propsi-microservices-user-service:latest  # Specify the image name and tag
+    image: jwojdylak/propsi-microservices-user-service:latest
     build:
       context: ./user-service
       dockerfile: ./Dockerfile
@@ -15,7 +72,7 @@ services:
     restart: on-failure
 
   property-service:
-    image: jwojdylak/propsi-microservices-property-service:latest  # Specify the image name and tag
+    image: jwojdylak/propsi-microservices-property-service:latest
     build:
       context: ./property-service
       dockerfile: ./Dockerfile
@@ -28,7 +85,7 @@ services:
     restart: on-failure
 
   rental-service:
-    image: jwojdylak/propsi-microservices-rental-service:latest  # Specify the image name and tag
+    image: jwojdylak/propsi-microservices-rental-service:latest
     build:
       context: ./rental-service
       dockerfile: ./Dockerfile
@@ -41,7 +98,7 @@ services:
     restart: on-failure
 
   payment-service:
-    image: jwojdylak/propsi-microservices-payment-service:latest  # Specify the image name and tag
+    image: jwojdylak/propsi-microservices-payment-service:latest
     build:
       context: ./payment-service
       dockerfile: ./Dockerfile
@@ -70,3 +127,10 @@ services:
 networks:
   spring-cloud-network:
     driver: bridge
+
+# VOLUMES
+volumes:
+  postgres-user-data:
+  postgres-property-data:
+  postgres-rental-data:
+  postgres-payment-data:
