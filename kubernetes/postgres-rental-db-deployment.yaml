@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-rental-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-rental-db
+  template:
+    metadata:
+      labels:
+        app: postgres-rental-db
+    spec:
+      containers:
+        - name: postgres-rental-db
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: rental_db
+            - name: POSTGRES_USER
+              value: user
+            - name: POSTGRES_PASSWORD
+              value: pass
+          volumeMounts:
+            - name: postgres-rental-volume
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-rental-volume
+          persistentVolumeClaim:
+            claimName: postgres-rental-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-rental-db-service
+spec:
+  selector:
+    app: postgres-rental-db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP

@@ -22,6 +22,13 @@ spec:
           env:
             - name: SERVER_PORT
               value: "8083"
+          resources:
+            requests:
+              memory: "800Mi"
+              cpu: "200m"
+            limits:
+              memory: "1000Mi"
+              cpu: "600m"
 ---
 apiVersion: v1
 kind: Service

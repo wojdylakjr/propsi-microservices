@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-payment-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-payment-db
+  template:
+    metadata:
+      labels:
+        app: postgres-payment-db
+    spec:
+      containers:
+        - name: postgres-payment-db
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: payment_db
+            - name: POSTGRES_USER
+              value: user
+            - name: POSTGRES_PASSWORD
+              value: pass
+          volumeMounts:
+            - name: postgres-payment-volume
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-payment-volume
+          persistentVolumeClaim:
+            claimName: postgres-payment-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-payment-db-service
+spec:
+  selector:
+    app: postgres-payment-db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP

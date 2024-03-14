@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   # DATABASES
-  user-db:
+  postgres-user-db-service:
     image: postgres:latest
     container_name: user-db
     environment:
@@ -15,7 +15,7 @@ services:
     volumes:
       - postgres-user-data:/var/lib/postgresql/data
 
-  property-db:
+  postgres-property-db-service:
     image: postgres:latest
     container_name: property-db
     environment:
@@ -29,7 +29,7 @@ services:
     volumes:
       - postgres-property-data:/var/lib/postgresql/data
 
-  rental-db:
+  postgres-rental-db-service:
     image: postgres:latest
     container_name: rental-db
     environment:
@@ -43,7 +43,7 @@ services:
     volumes:
       - postgres-rental-data:/var/lib/postgresql/data
 
-  payment-db:
+  postgres-payment-db-service:
     image: postgres:latest
     container_name: payment-db
     environment:
