@@ -22,13 +22,15 @@ spec:
           env:
             - name: SERVER_PORT
               value: "8084"
+            - name: "JAVA_OPTS"
+              value: "-Xmx75M"
           resources:
             requests:
-              memory: "800Mi"
+              memory: "900Mi"
               cpu: "200m"
             limits:
-              memory: "1000Mi"
-              cpu: "600m"
+              memory: "900Mi"
+              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service

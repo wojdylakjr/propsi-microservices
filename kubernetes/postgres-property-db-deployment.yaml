@@ -24,6 +24,13 @@ spec:
               value: user
             - name: POSTGRES_PASSWORD
               value: pass
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "100m"
+            limits:
+              memory: "400Mi"
+              cpu: "300m"
           volumeMounts:
             - name: postgres-property-volume
               mountPath: /var/lib/postgresql/data
