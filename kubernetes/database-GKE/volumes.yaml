@@ -1,0 +1,114 @@
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: postgres-user-pv
+#spec:
+#  storageClassName: manual
+#  capacity:
+#    storage: 100Mi
+#  volumeMode: Filesystem
+#  accessModes:
+#    - ReadWriteOnce
+#  hostPath:
+#    path: /data/postgres-user-data
+#
+#---
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: postgres-property-pv
+#spec:
+#  storageClassName: manual
+#  capacity:
+#    storage: 100Mi
+#  volumeMode: Filesystem
+#  accessModes:
+#    - ReadWriteOnce
+#  hostPath:
+#    path: /data/postgres-property-data
+#
+#---
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: postgres-rental-pv
+#spec:
+#  storageClassName: manual
+#  capacity:
+#    storage: 100Mi
+#  volumeMode: Filesystem
+#  accessModes:
+#    - ReadWriteOnce
+#  hostPath:
+#    path: /data/postgres-rental-data
+#
+#---
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+#  name: postgres-payment-pv
+#spec:
+#  storageClassName: manual
+#  capacity:
+#    storage: 100Mi
+#  volumeMode: Filesystem
+#  accessModes:
+#    - ReadWriteOnce
+#  hostPath:
+#    path: /data/postgres-payment-data
+#
+#---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-user-pvc
+spec:
+  #  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+#  volumeName: postgres-user-pv
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-property-pvc
+spec:
+  #  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+#  volumeName: postgres-property-pv
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-rental-pvc
+spec:
+  #  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+#  volumeName: postgres-rental-pv
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-payment-pvc
+spec:
+  #  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+#  volumeName: postgres-payment-pv

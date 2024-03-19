@@ -1,0 +1,141 @@
+version: "3.8"
+services:
+  # DATABASES
+  postgres-user-db-service:
+    image: postgres:latest
+    container_name: user-db
+    environment:
+      - POSTGRES_DB=user_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    ports:
+      - "5432:5432"
+    networks:
+      - spring-cloud-network
+    volumes:
+      - postgres-user-data:/var/lib/postgresql/data
+
+  postgres-property-db-service:
+    image: postgres:latest
+    container_name: property-db
+    environment:
+      - POSTGRES_DB=property_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    ports:
+      - "5433:5432"
+    networks:
+      - spring-cloud-network
+    volumes:
+      - postgres-property-data:/var/lib/postgresql/data
+
+  postgres-rental-db-service:
+    image: postgres:latest
+    container_name: rental-db
+    environment:
+      - POSTGRES_DB=rental_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    ports:
+      - "5434:5432"
+    networks:
+      - spring-cloud-network
+    volumes:
+      - postgres-rental-data:/var/lib/postgresql/data
+
+  postgres-payment-db-service:
+    image: postgres:latest
+    container_name: payment-db
+    environment:
+      - POSTGRES_DB=payment_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    ports:
+      - "5435:5432"
+    networks:
+      - spring-cloud-network
+    volumes:
+      - postgres-payment-data:/var/lib/postgresql/data
+
+  # JAVA SERVICES
+  user-service:
+    platform: linux/amd64
+    image: jwojdylak/propsi-microservices-user-service:latest
+    build:
+      context: ./user-service
+      dockerfile: ./Dockerfile
+    environment:
+      - SERVER_PORT=8081
+    ports:
+      - "8081:8081"
+    networks:
+      - spring-cloud-network
+    restart: on-failure
+
+  property-service:
+    platform: linux/amd64
+    image: jwojdylak/propsi-microservices-property-service:latest
+    build:
+      context: ./property-service
+      dockerfile: ./Dockerfile
+    environment:
+      - SERVER_PORT=8082
+    ports:
+      - "8082:8082"
+    networks:
+      - spring-cloud-network
+    restart: on-failure
+
+  rental-service:
+    platform: linux/amd64
+    image: jwojdylak/propsi-microservices-rental-service:latest
+    build:
+      context: ./rental-service
+      dockerfile: ./Dockerfile
+    environment:
+      - SERVER_PORT=8083
+    ports:
+      - "8083:8083"
+    networks:
+      - spring-cloud-network
+    restart: on-failure
+
+  payment-service:
+    platform: linux/amd64
+    image: jwojdylak/propsi-microservices-payment-service:latest
+    build:
+      context: ./payment-service
+      dockerfile: ./Dockerfile
+    environment:
+      - SERVER_PORT=8084
+    ports:
+      - "8084:8084"
+    networks:
+      - spring-cloud-network
+    restart: on-failure
+
+  api-gateway-service:
+    platform: linux/amd64
+    image: jwojdylak/propsi-microservices-api-gateway:latest
+    build:
+      context: ./api-gateway
+      dockerfile: ./Dockerfile
+    environment:
+      - SERVER_PORT=8080
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-cloud-network
+    restart: on-failure
+
+# NETWORK
+networks:
+  spring-cloud-network:
+    driver: bridge
+
+# VOLUMES
+volumes:
+  postgres-user-data:
+  postgres-property-data:
+  postgres-rental-data:
+  postgres-payment-data:
