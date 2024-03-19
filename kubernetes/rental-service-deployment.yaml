@@ -47,3 +47,15 @@ spec:
   selector:
     app: rental-service
   type: ClusterIP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: rental-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: rental-service
+  endpoints:
+    - port: 8083-8083
+      path: "/payment-service/actuator/prometheus"

@@ -47,3 +47,15 @@ spec:
   selector:
     app: property-service
   type: ClusterIP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: property-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: property-service
+  endpoints:
+    - port: 8082-8082
+      path: "/property-service/actuator/prometheus"

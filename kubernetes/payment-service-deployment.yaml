@@ -47,3 +47,15 @@ spec:
   selector:
     app: payment-service
   type: ClusterIP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: payment-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: payment-service
+  endpoints:
+    - port: 8084-8084
+      path: "/payment-service/actuator/prometheus"

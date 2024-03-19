@@ -47,3 +47,15 @@ spec:
   selector:
     app: api-gateway-service
   type: LoadBalancer
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: api-gateway-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: api-gateway-service
+  endpoints:
+    - port: 8080-8080
+      path: "/api-gateway/actuator/prometheus"

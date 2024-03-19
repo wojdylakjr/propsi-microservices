@@ -27,20 +27,24 @@ public class GatewayConfig {
         return routeLocatorBuilder.routes()
                 .route("user-service-users", r -> r.path(
                                 "/users/**",
-                                "/owners/**")
+                                "/owners/**",
+                                "/user-service/**")
                         .uri(userServiceUrl))
                 .route("property-service", r -> r.path(
                                 "/properties/**",
                                 "/meter-measurements/**",
                                 "/premises-costs-details/**",
-                                "/premises/**")
+                                "/premises/**",
+                                "/property-service/**")
                         .uri(propertyServiceUrl))
                 .route("rental-service", r -> r.path(
                                 "/rentals/**",
-                                "/bills/**")
+                                "/bills/**",
+                                "/rental-service/**")
                         .uri(rentalServiceUrl))
                 .route("payment-service", r -> r.path(
-                                "/payments/**")
+                                "/payments/**",
+                                "/payment-service/**")
                         .uri(paymentServiceUrl))
                 .build();
     }

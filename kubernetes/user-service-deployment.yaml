@@ -47,6 +47,18 @@ spec:
   selector:
     app: user-service
   type: ClusterIP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: user-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: user-service
+  endpoints:
+    - port: 8083-8083
+      path: "/user-service/actuator/prometheus"
 
 #kubectl create deployment demo --image=jwojdylak/propsi-microservices-user-service:LATEST --dry-run -o=yaml > deployment.yaml
 #echo --- >> deployment.yaml

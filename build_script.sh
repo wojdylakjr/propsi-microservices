@@ -1,6 +1,6 @@
 #!/bin/bash
 
-services=("user-service" "property-service" "payment-service" "rental-service")
+services=("user-service" "property-service" "payment-service" "rental-service" "api-gateway")
 
 for service in "${services[@]}"; do
     echo "Building $service..."
