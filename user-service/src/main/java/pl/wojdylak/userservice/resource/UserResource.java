@@ -22,4 +22,9 @@ public class UserResource {
     public User createUser(@RequestBody User user) {
         return userService.save(user);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteById(id);
+    }
 }
