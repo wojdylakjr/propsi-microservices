@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pl.wojdylak.userservice.domain.Authority;
 import pl.wojdylak.userservice.domain.AuthorityEnum;
 import pl.wojdylak.userservice.domain.User;
+import pl.wojdylak.userservice.domain.dto.UserResponseDto;
 import pl.wojdylak.userservice.repository.UserRepository;
 
 import java.util.List;
@@ -22,6 +23,11 @@ public class UserService {
     public List<User> getAllUsers() {
 
         return userRepository.findAll();
+    }
+
+    public UserResponseDto findById(Long id) {
+
+        return userRepository.findUserResponseDtoById(id);
     }
 
     public User save(User user) {
@@ -41,8 +47,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
     public void deleteById(Long id) {
+
         userRepository.deleteById(id);
     }
 }
