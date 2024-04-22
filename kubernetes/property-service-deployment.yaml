@@ -3,22 +3,23 @@ kind: Deployment
 metadata:
   name: property-service
   labels:
-    app: property-service
+    app.kubernetes.io/name: property-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: property-service
+      app.kubernetes.io/name: property-service
   template:
     metadata:
       labels:
-        app: property-service
+        app.kubernetes.io/name: property-service
     spec:
       containers:
         - name: property-service
           image: jwojdylak/propsi-microservices-property-service:latest
           ports:
-            - containerPort: 8082
+            - name: http
+              containerPort: 8082
           env:
             - name: SERVER_PORT
               value: "8082"
@@ -31,31 +32,36 @@ spec:
             limits:
               memory: "1024Mi"
               cpu: "500m"
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: property-service
+    app.kubernetes.io/name: property-service
   name: property-service
 spec:
   ports:
-    - name: 8082-8082
+    - name: http
       port: 8082
       protocol: TCP
       targetPort: 8082
   selector:
-    app: property-service
+    app.kubernetes.io/name: property-service
   type: ClusterIP
+
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
 metadata:
-  name: property-service-monitor
+  name: property-service
+  labels:
+    app.kubernetes.io/name: property-service
 spec:
   selector:
     matchLabels:
-      app: property-service
+      app.kubernetes.io/name: property-service
   endpoints:
-    - port: 8082-8082
-      path: "/property-service/actuator/prometheus"
+    - port: http
+      path: /property-service/actuator/prometheus
+      interval: 30s

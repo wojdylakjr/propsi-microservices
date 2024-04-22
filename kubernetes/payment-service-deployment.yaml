@@ -3,22 +3,23 @@ kind: Deployment
 metadata:
   name: payment-service
   labels:
-    app: payment-service
+    app.kubernetes.io/name: payment-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: payment-service
+      app.kubernetes.io/name: payment-service
   template:
     metadata:
       labels:
-        app: payment-service
+        app.kubernetes.io/name: payment-service
     spec:
       containers:
         - name: payment-service
           image: jwojdylak/propsi-microservices-payment-service:latest
           ports:
-            - containerPort: 8084
+            - name: http
+              containerPort: 8084
           env:
             - name: SERVER_PORT
               value: "8084"
@@ -31,31 +32,52 @@ spec:
             limits:
               memory: "1024Mi"
               cpu: "500m"
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: payment-service
+    app.kubernetes.io/name: payment-service
   name: payment-service
 spec:
   ports:
-    - name: 8084-8084
+    - name: http
       port: 8084
       protocol: TCP
       targetPort: 8084
   selector:
-    app: payment-service
+    app.kubernetes.io/name: payment-service
   type: ClusterIP
+
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
 metadata:
-  name: payment-service-monitor
+  name: payment-service
+  labels:
+    app.kubernetes.io/name: payment-service
 spec:
   selector:
     matchLabels:
-      app: payment-service
+      app.kubernetes.io/name: payment-service
   endpoints:
-    - port: 8084-8084
-      path: "/payment-service/actuator/prometheus"
+    - port: http
+      path: /payment-service/actuator/prometheus
+      interval: 30s
+
+---
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
+metadata:
+  name: user-service
+  labels:
+    app.kubernetes.io/name: user-service
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: user-service
+  endpoints:
+    - port: http
+      path: /user-service/actuator/prometheus
+      interval: 30s

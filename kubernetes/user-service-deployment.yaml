@@ -3,22 +3,23 @@ kind: Deployment
 metadata:
   name: user-service
   labels:
-    app: user-service
+    app.kubernetes.io/name: user-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user-service
+      app.kubernetes.io/name: user-service
   template:
     metadata:
       labels:
-        app: user-service
+        app.kubernetes.io/name: user-service
     spec:
       containers:
         - name: user-service
           image: jwojdylak/propsi-microservices-user-service:latest
           ports:
-            - containerPort: 8081
+            - name: http
+              containerPort: 8081
           env:
             - name: SERVER_PORT
               value: "8081"
@@ -31,34 +32,39 @@ spec:
             limits:
               memory: "1024Mi"
               cpu: "500m"
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: user-service
+    app.kubernetes.io/name: user-service
   name: user-service
 spec:
   ports:
-    - name: 8081-8081
+    - name: http
       port: 8081
       protocol: TCP
       targetPort: 8081
   selector:
-    app: user-service
+    app.kubernetes.io/name: user-service
   type: ClusterIP
+
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
 metadata:
-  name: user-service-monitor
+  name: user-service
+  labels:
+    app.kubernetes.io/name: user-service
 spec:
   selector:
     matchLabels:
-      app: user-service
+      app.kubernetes.io/name: user-service
   endpoints:
-    - port: 8083-8083
-      path: "/user-service/actuator/prometheus"
+    - port: http
+      path: /user-service/actuator/prometheus
+      interval: 30s
 
 #kubectl create deployment demo --image=jwojdylak/propsi-microservices-user-service:LATEST --dry-run -o=yaml > deployment.yaml
 #echo --- >> deployment.yaml
