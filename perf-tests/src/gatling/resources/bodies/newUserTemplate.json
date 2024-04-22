@@ -1,0 +1,10 @@
+{
+  "firstName": "#{firstName}",
+  "lastName": "#{lastName}",
+  "email": "#{email}",
+  "password": "#{password}",
+  "authorities":
+  #{
+  authorities.jsonStringify()
+}
+}

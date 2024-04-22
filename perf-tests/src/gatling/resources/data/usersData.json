@@ -1,0 +1,43 @@
+[
+  {
+    "firstName": "Jan",
+    "lastName": "Kowalski",
+    "email": "jan.kowalski@gmail.com",
+    "password": "a",
+    "authorities": [
+      "ROLE_USER",
+      "ROLE_ADMIN",
+      "ROLE_TENANT",
+      "ROLE_OWNER"
+    ]
+  },
+  {
+    "firstName": "Anna",
+    "lastName": "Kowalska",
+    "email": "anna.kowalska@gmail.com",
+    "password": "b",
+    "authorities": [
+      "ROLE_USER",
+      "ROLE_TENANT"
+    ]
+  },
+  {
+    "firstName": "Piotr",
+    "lastName": "Nowak",
+    "email": "piotr.nowak@gmail.com",
+    "password": "c",
+    "authorities": [
+      "ROLE_USER",
+      "ROLE_OWNER"
+    ]
+  },
+  {
+    "firstName": "Agnieszka",
+    "lastName": "Lewandowska",
+    "email": "agnieszka.lewandowska@gmail.com",
+    "password": "d",
+    "authorities": [
+      "ROLE_USER"
+    ]
+  }
+]
