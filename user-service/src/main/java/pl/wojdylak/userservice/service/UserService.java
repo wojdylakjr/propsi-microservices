@@ -1,8 +1,11 @@
 package pl.wojdylak.userservice.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import pl.wojdylak.userservice.domain.Authority;
 import pl.wojdylak.userservice.domain.AuthorityEnum;
 import pl.wojdylak.userservice.domain.User;
@@ -20,20 +23,24 @@ public class UserService {
     private final TenantService tenantService;
     private final OwnerService ownerService;
 
-    public List<User> getAllUsers() {
+    public List<UserResponseDto> getAllUsers() {
 
-        return userRepository.findAll();
+        return userRepository.findAllUsers();
     }
 
-    public UserResponseDto findById(Long id) {
+    public User findById(Long id) {
 
-        return userRepository.findUserResponseDtoById(id);
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "User not found with ID: " + id));
+
     }
 
+    @Transactional
     public User save(User user) {
 
         if (user.getAuthorities() != null) {
-            authorityService.saveAuthority(user.getAuthorities());
+            authorityService.saveAuthorities(user.getAuthorities());
 
             if (user.getAuthorities().contains(new Authority(AuthorityEnum.ROLE_TENANT))) {
                 tenantService.createDefaultTenantProfileForUser(user);
@@ -50,5 +57,10 @@ public class UserService {
     public void deleteById(Long id) {
 
         userRepository.deleteById(id);
+    }
+
+    public void deleteAll() {
+
+        userRepository.deleteAll();
     }
 }

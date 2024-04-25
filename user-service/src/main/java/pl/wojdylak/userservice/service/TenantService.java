@@ -1,5 +1,6 @@
 package pl.wojdylak.userservice.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.wojdylak.userservice.domain.Tenant;
@@ -11,6 +12,7 @@ import pl.wojdylak.userservice.repository.TenantRepository;
 public class TenantService {
     private final TenantRepository tenantRepository;
 
+    @Transactional
     public Tenant createDefaultTenantProfileForUser(User user) {
 
         Tenant tenant = new Tenant(user.getFirstName() + "-TENANT-PROFILE");

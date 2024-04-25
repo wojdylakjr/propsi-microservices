@@ -15,12 +15,12 @@ public class UserResource {
     private final UserService userService;
 
     @GetMapping()
-    public List<User> getAllUsers() {
+    public List<UserResponseDto> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public UserResponseDto getUserById(@PathVariable Long id) {
+    public User getUserById(@PathVariable Long id) {
         return userService.findById(id);
     }
 
@@ -32,5 +32,10 @@ public class UserResource {
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteById(id);
+    }
+
+    @DeleteMapping()
+    public void deleteAllUsers() {
+        userService.deleteAll();
     }
 }

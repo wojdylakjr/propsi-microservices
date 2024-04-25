@@ -1,5 +1,6 @@
 package pl.wojdylak.userservice.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.wojdylak.userservice.domain.Authority;
@@ -13,7 +14,8 @@ import java.util.Set;
 public class AuthorityService {
     private final AuthorityRepository authorityRepository;
 
-    public List<Authority> saveAuthority(Set<Authority> authorities) {
+    @Transactional
+    public List<Authority> saveAuthorities(Set<Authority> authorities) {
         return authorityRepository.saveAll(authorities);
     }
 }
