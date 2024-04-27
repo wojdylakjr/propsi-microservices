@@ -27,11 +27,11 @@ spec:
               value: "-Xmx75M"
           resources:
             requests:
-              memory: "1024Mi"
-              cpu: "200m"
+              memory: "800Mi"
+              cpu: "0.5"
             limits:
-              memory: "1024Mi"
-              cpu: "500m"
+              memory: "800Mi"
+              cpu: "0.6"
 
 ---
 apiVersion: v1
@@ -64,7 +64,40 @@ spec:
   endpoints:
     - port: http
       path: /user-service/actuator/prometheus
-      interval: 30s
+      interval: 10s
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: user-service
+  namespace: default
+spec:
+  maxReplicas: 4
+  metrics:
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 80
+          type: Utilization
+      type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: user-service
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 240  # Okres chłodzenia dla skalowania w dół
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 10  # Częstotliwość sprawdzania
+    scaleUp:
+      stabilizationWindowSeconds: 240  # Okres chłodzenia dla skalowania w górę
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 10  # Częstotliwość sprawdzania
 
 #kubectl create deployment demo --image=jwojdylak/propsi-microservices-user-service:LATEST --dry-run -o=yaml > deployment.yaml
 #echo --- >> deployment.yaml
