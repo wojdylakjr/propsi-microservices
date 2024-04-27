@@ -4,7 +4,5 @@
   "email": "#{email}",
   "password": "#{password}",
   "authorities":
-  #{
-  authorities.jsonStringify()
-}
+  #{authorities.jsonStringify()}
 }
