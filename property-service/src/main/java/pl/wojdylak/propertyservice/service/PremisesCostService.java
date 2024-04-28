@@ -1,5 +1,6 @@
 package pl.wojdylak.propertyservice.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.wojdylak.propertyservice.domain.PremisesCost;
@@ -18,6 +19,7 @@ public class PremisesCostService {
     private final PremisesCostDetailRepository premisesCostDetailRepository;
     private final PremisesCostDetailCreator premisesCostDetailCreator;
 
+    @Transactional
     public void save(CreatePremisesCostDetailRequestDto createPremisesCostDetailRequestDto) {
 
         PremisesCost premisesCost = premisesCostRepository.findById(createPremisesCostDetailRequestDto.premisesCostId())

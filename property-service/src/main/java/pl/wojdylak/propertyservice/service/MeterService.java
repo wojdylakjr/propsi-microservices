@@ -1,5 +1,6 @@
 package pl.wojdylak.propertyservice.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.wojdylak.propertyservice.domain.Meter;
@@ -18,6 +19,7 @@ public class MeterService {
     private final MeterRepository meterRepository;
     private final MeterMeasurementCreator meterMeasurementCreator;
 
+    @Transactional
     public void save(CreateMeterMeasurementRequestDto createMeterMeasurementRequestDto) {
 
         Meter meter = meterRepository.findById(createMeterMeasurementRequestDto.meterId())
@@ -26,7 +28,6 @@ public class MeterService {
         MeterMeasurement meterMeasurement = meterMeasurementCreator.create(createMeterMeasurementRequestDto, meter);
 
         meterMeasurementRepository.save(meterMeasurement);
-
     }
 
     public List<MeterMeasurement> findAll() {
