@@ -1,0 +1,46 @@
+{
+  "name": "Nieruchomość 1",
+  "isSinglePremises": true,
+  "ownerId": 123456,
+  "address": {
+    "zipCode": "12-345",
+    "city": "Warszawa",
+    "street": "ul. Przykładowa",
+    "streetNumber": "10",
+    "unitNumber": "3A"
+  },
+  "fixedCosts": [
+    {
+      "costType": "Czynsz",
+      "costValue": 1500.00
+    },
+    {
+      "costType": "Woda",
+      "costValue": 100.00
+    }
+  ],
+  "premises": [
+    {
+      "name": "Mieszkanie 1",
+      "premisesCosts": [
+        {
+          "costType": "Water"
+        },
+        {
+          "costType": "Electricity"
+        }
+      ],
+      "meters": [
+        {
+          "meterType": "Electricity"
+        },
+        {
+          "meterType": "Water"
+        }
+      ]
+    },
+    {
+      "name": "Mieszkanie 2"
+    }
+  ]
+}
