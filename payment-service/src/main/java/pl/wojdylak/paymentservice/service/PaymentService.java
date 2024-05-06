@@ -12,6 +12,9 @@ import pl.wojdylak.paymentservice.domain.payu.PayUTokenResponse;
 import pl.wojdylak.paymentservice.repository.PaymentRepository;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -32,15 +35,28 @@ public class PaymentService {
         Owner owner = ownerCreator.create(ownerDto, payUTokenResponse);
         ownerService.save(owner);
 
-        return payUClient.addOrder(payUOrderRequestCreator.create(bill, ownerDto),
+        PayUAddOrderResponse payUAddOrderResponse = payUClient.addOrder(payUOrderRequestCreator.create(bill, ownerDto),
                 payUTokenResponse.accessToken());
 
+        Payment payment = Payment.builder()
+                .id(payUAddOrderResponse.orderId())
+                .date(Date.from(Instant.now()))
+                .status("NOT_PAID")
+                .build();
+
+        paymentRepository.save(payment);
+
+        return payUAddOrderResponse;
     }
 
-    public void savePaymentResponse(PayUPaymentNotification paymentNotification) {
+    public void updatePayment(PayUPaymentNotification paymentNotification) {
+
+//        Payment payment = paymentRepository.findById(paymentNotification.order().orderId())
+//                .orElseThrow();
+
 
         Payment payment = Payment.builder()
-                .id(paymentNotification.order().extOrderId())
+                .id(paymentNotification.order().orderId())
                 .date(paymentNotification.localReceiptDateTime())
                 .payUPaymentId(paymentNotification.order().orderId())
                 .status(paymentNotification.order().status())
@@ -51,5 +67,22 @@ public class PaymentService {
 
         paymentRepository.save(payment);
 
+    }
+
+    public Payment findById(String id) {
+        return paymentRepository.findById(id)
+                .orElseThrow();
+    }
+
+    public List<Payment> findAll() {
+        return paymentRepository.findAll();
+    }
+
+    public void deleteById(String id) {
+        paymentRepository.deleteById(id);
+    }
+
+    public void deleteAll() {
+        paymentRepository.deleteAll();
     }
 }

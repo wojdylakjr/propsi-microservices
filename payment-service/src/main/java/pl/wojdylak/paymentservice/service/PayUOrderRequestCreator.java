@@ -7,6 +7,7 @@ import pl.wojdylak.paymentservice.domain.payu.PayUOrderRequest;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -22,7 +23,7 @@ public class PayUOrderRequestCreator {
         PayUOrderRequest.Product product = new PayUOrderRequest.Product("Bill", convertToPayUFormat(bill.value()), "1");
 
         return PayUOrderRequest.builder()
-                .extOrderId(bill.billId().toString())
+                .extOrderId(bill.billId() + "-" + LocalDateTime.now())
                 .description("Bill for " + bill.date().toString())
                 .merchantPosId(owner.payUClientId())
                 .currencyCode("PLN")
