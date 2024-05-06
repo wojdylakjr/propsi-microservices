@@ -8,8 +8,7 @@ import io.gatling.javaapi.http.HttpProtocolBuilder;
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.http;
 
-public class PropertyServiceSimulation extends Simulation {
-
+public class RentalServiceSimulation extends Simulation {
     public static final String IP_NOT_DEFINED_ERROR = "IP_NOT_DEFINED_ERROR";
     //parameters
     private static final int PAUSE_TIME_IN_SECONDS = 1;
@@ -21,30 +20,35 @@ public class PropertyServiceSimulation extends Simulation {
     private static final int STEPS_COUNT = Integer.parseInt(System.getProperty("STEPS_COUNT", "3"));
     private static final int STEP_TIME = RAMP_DURATION / 2 * STEPS_COUNT;
     private static final String API_GATEWAY_IP = System.getProperty("IP", IP_NOT_DEFINED_ERROR);
-    //    private static final String URL = "http://" + API_GATEWAY_IP + ":8080";
-    private static final String URL = "http://localhost:8082";
+    //    private static final String URL = "http://" + API_GATEWAY_IP + ":8083";
+    private static final String URL = "http://localhost:8083";
 
     //HTTP calls
-    private static final ChainBuilder getAllProperties =
-            exec(http("Get all properties")
-                    .get("/properties"));
-    private static final ChainBuilder createProperty =
-            exec(http("Create property")
-                    .post("/properties")
-                    .body(ElFileBody("bodies/newProperty.json")).asJson()
-                    .check(jmesPath("id").optional().saveAs("propertyId")));
-    private static final ChainBuilder getPropertyById =
-            exec(http("Get property by id")
-                    .get("/properties/#{propertyId}")
-                    .check(jmesPath("premises[0].meters[0].id").optional().saveAs("meterId")));
+    private static final ChainBuilder getAllRentals =
+            exec(http("Get all rentals")
+                    .get("/rentals"));
+    private static final ChainBuilder createRental =
+            exec(http("Create rental")
+                    .post("/rentals")
+                    .body(ElFileBody("bodies/newRental.json")).asJson()
+                    .check(jmesPath("id").optional().saveAs("rentalId")));
+    private static final ChainBuilder getRentalById =
+            exec(http("Get rental by id")
+                    .get("/rentals/#{rentalId}"));
 
-    private static final ChainBuilder createMeterMeasurement =
-            exec(http("Create meter measurement")
-                    .post("/meter-measurements")
-                    .body(ElFileBody("bodies/meterMeasurementBody.json")).asJson());
-    private static final ChainBuilder deletePropertyById =
-            exec(http("Delete user by id")
-                    .delete("/properties/#{propertyId}"));
+    private static final ChainBuilder createBill =
+            exec(http("Create bill for rental")
+                    .post("/bills")
+                    .body(ElFileBody("bodies/newBill.json")).asJson());
+
+    private static final ChainBuilder getAllBills =
+            exec(http("Get all bills")
+                    .get("/bills"));
+
+    private static final ChainBuilder deleteRentalById =
+            exec(http("Delete rental by id")
+                    .delete("/rentals/#{rentalId}"));
+
 
     //Http configuration
     private final HttpProtocolBuilder httpProtocol = http
@@ -53,16 +57,18 @@ public class PropertyServiceSimulation extends Simulation {
             .contentTypeHeader("application/json");
 
     //Scenario definition
-    private final ScenarioBuilder scn = scenario("Property service perf test")
-            .exec(getAllProperties)
+    private final ScenarioBuilder scn = scenario("Rental service perf test")
+            .exec(getAllRentals)
             .pause(PAUSE_TIME_IN_SECONDS)
-            .exec(createProperty)
+            .exec(createRental)
             .pause(PAUSE_TIME_IN_SECONDS)
-            .exec(getPropertyById)
+            .exec(getRentalById)
             .pause(PAUSE_TIME_IN_SECONDS)
-            .exec(createMeterMeasurement)
+            .exec(createBill)
             .pause(PAUSE_TIME_IN_SECONDS)
-            .exec(deletePropertyById);
+            .exec(getAllBills)
+            .pause(PAUSE_TIME_IN_SECONDS)
+            .exec(deleteRentalById);
 
 
     //Load simulation

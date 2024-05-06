@@ -9,7 +9,7 @@ import io.gatling.javaapi.http.HttpProtocolBuilder;
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.http;
 
-public class UserSimulation extends Simulation {
+public class UserServiceSimulation extends Simulation {
 
     //parameters
     private static final int PAUSE_TIME_IN_SECONDS = 1;
