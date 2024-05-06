@@ -27,15 +27,15 @@ public class BillService {
         return billRepository.findAllBillDto();
     }
 
-    public BillResponseDto findBillById(Long id) {
-        return billRepository.findBillDtoById(id)
+    public Bill findBillById(Long id) {
+
+        return billRepository.findById(id)
                 .orElseThrow();
     }
 
     public void createBill(CreateBillDto createBillDto) {
 
-        Rental rental = rentalService.findById(createBillDto.rentalId())
-                .orElseThrow();
+        Rental rental = rentalService.findById(createBillDto.rentalId());
 
         List<PremisesCostsDetailsResponseDto> premisesCostsInMonth = propertyServiceClient.getPremisesCostsInMonth(rental.getPremisesId(), createBillDto.monthValue());
 
@@ -61,5 +61,9 @@ public class BillService {
 
 
         return rentalBillLineItem;
+    }
+
+    public void deleteBillById(Long id) {
+        billRepository.deleteById(id);
     }
 }

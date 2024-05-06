@@ -17,7 +17,7 @@ public interface PremisesRepository extends JpaRepository<Premises, Long> {
             "JOIN p.premisesCosts pc " +
             "JOIN pc.premisesCostDetails pcd " +
             "WHERE p.id = :premisesId " +
-            "AND FUNCTION('MONTH', pcd.date) = :month")
+            "AND EXTRACT(MONTH FROM pcd.date) = :month")
     List<PremisesCostsDetailsResponseDto> findPremisesCostsWithDetailsByPremisesIdAndMonth(@Param("premisesId") Long premisesId,
                                                                                            @Param("month") int month);
 }
