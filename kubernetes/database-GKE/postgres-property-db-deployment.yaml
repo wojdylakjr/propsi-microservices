@@ -27,10 +27,11 @@ spec:
           resources:
             requests:
               memory: "400Mi"
-              cpu: "100m"
+              cpu: "0.5"
             limits:
               memory: "400Mi"
-              cpu: "300m"
+              cpu: "1"
+
           volumeMounts:
             - name: postgres-property-volume
               mountPath: /var/lib/postgresql/property-data
