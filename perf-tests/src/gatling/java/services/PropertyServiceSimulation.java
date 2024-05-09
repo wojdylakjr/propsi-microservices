@@ -21,8 +21,8 @@ public class PropertyServiceSimulation extends Simulation {
     private static final int STEPS_COUNT = Integer.parseInt(System.getProperty("STEPS_COUNT", "3"));
     private static final int STEP_TIME = RAMP_DURATION / (2 * STEPS_COUNT);
     private static final String API_GATEWAY_IP = System.getProperty("IP", IP_NOT_DEFINED_ERROR);
-    //    private static final String URL = "http://" + API_GATEWAY_IP + ":8080";
-    private static final String URL = "http://localhost:8082";
+    private static final String URL = "http://" + API_GATEWAY_IP + ":8080";
+//    private static final String URL = "http://localhost:8082";
 
     //HTTP calls
     private static final ChainBuilder getAllProperties =
