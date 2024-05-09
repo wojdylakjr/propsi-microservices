@@ -1,0 +1,11 @@
+{
+  "tenantId": 123,
+  "premisesId": 1,
+  "ownerId": "#{ownerId}",
+  "name": "Example Rental",
+  "rentPrice": 1500.00,
+  "rentalStartDate": "2024-02-22T10:15:30Z",
+  "rentalEndDate": "2024-08-22T10:15:30Z",
+  "paymentDay": 5,
+  "costsPart": 0.5
+}

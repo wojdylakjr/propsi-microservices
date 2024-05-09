@@ -1,0 +1,10 @@
+{
+  "firstName": "Jan",
+  "lastName": "Woj",
+  "email": "email@gmail.com",
+  "password": "a",
+  "authorities": [
+    "ROLE_USER",
+    "ROLE_OWNER"
+  ]
+}

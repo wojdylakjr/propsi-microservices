@@ -1,0 +1,4 @@
+{
+  "billId": "#{billId}",
+  "tenantId": "1"
+}
