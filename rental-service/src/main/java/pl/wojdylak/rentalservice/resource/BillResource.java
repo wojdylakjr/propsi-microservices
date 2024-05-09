@@ -16,8 +16,8 @@ public class BillResource {
     private final BillService billService;
 
     @PostMapping()
-    public void createBill(@RequestBody CreateBillDto createBillDto) {
-        billService.createBill(createBillDto);
+    public Bill createBill(@RequestBody CreateBillDto createBillDto) {
+        return billService.createBill(createBillDto);
     }
 
     @GetMapping()
@@ -26,7 +26,7 @@ public class BillResource {
     }
 
     @GetMapping("/{id}")
-    public Bill getBillById(@PathVariable Long id) {
+    public BillResponseDto getBillById(@PathVariable Long id) {
         return billService.findBillById(id);
     }
 

@@ -27,13 +27,12 @@ public class BillService {
         return billRepository.findAllBillDto();
     }
 
-    public Bill findBillById(Long id) {
-
-        return billRepository.findById(id)
+    public BillResponseDto findBillById(Long id) {
+        return billRepository.findBillDtoById(id)
                 .orElseThrow();
     }
 
-    public void createBill(CreateBillDto createBillDto) {
+    public Bill createBill(CreateBillDto createBillDto) {
 
         Rental rental = rentalService.findById(createBillDto.rentalId());
 
@@ -48,7 +47,7 @@ public class BillService {
         billLineItems.add(getRentalBillLineItem(rental, bill));
 
         bill.addBillLineItems(billLineItems);
-        billRepository.save(bill);
+        return billRepository.save(bill);
     }
 
     private BillLineItem getRentalBillLineItem(Rental rental,
