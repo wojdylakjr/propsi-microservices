@@ -20,8 +20,8 @@ public class RentalServiceSimulation extends Simulation {
     private static final int STEPS_COUNT = Integer.parseInt(System.getProperty("STEPS_COUNT", "3"));
     private static final int STEP_TIME = RAMP_DURATION / 2 * STEPS_COUNT;
     private static final String API_GATEWAY_IP = System.getProperty("IP", IP_NOT_DEFINED_ERROR);
-    //    private static final String URL = "http://" + API_GATEWAY_IP + ":8083";
-    private static final String URL = "http://localhost:8083";
+    private static final String URL = "http://" + API_GATEWAY_IP + ":8083";
+//    private static final String URL = "http://localhost:8083";
 
     //HTTP calls
     private static final ChainBuilder getAllRentals =
@@ -76,13 +76,13 @@ public class RentalServiceSimulation extends Simulation {
         setUp(
                 scn.injectClosed(
 //                        LINEAR:
-                        rampConcurrentUsers(1).to(1).during(15)
+//                        rampConcurrentUsers(1).to(1).during(15)
 //                        STEPS:
-//                        incrementConcurrentUsers(INCREMENT_USERS)
-//                                .times(STEPS_COUNT)
-//                                .eachLevelLasting(STEP_TIME)
-//                                .separatedByRampsLasting(STEP_TIME)
-//                                .startingFrom(0)
+                        incrementConcurrentUsers(INCREMENT_USERS)
+                                .times(STEPS_COUNT)
+                                .eachLevelLasting(STEP_TIME)
+                                .separatedByRampsLasting(STEP_TIME)
+                                .startingFrom(0)
                 )
         ).protocols(httpProtocol);
     }
@@ -95,7 +95,7 @@ public class RentalServiceSimulation extends Simulation {
 
         if (IP_NOT_DEFINED_ERROR.equals(API_GATEWAY_IP)) {
             System.out.println("API Gateway IP is not defined. Exit tests");
-//            System.exit(0);
+            System.exit(0);
         }
     }
 }

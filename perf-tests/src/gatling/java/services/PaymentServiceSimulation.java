@@ -130,13 +130,13 @@ public class PaymentServiceSimulation extends Simulation {
                         .andThen(
                                 mainScenario.injectClosed(
 //                        LINEAR:
-                                        rampConcurrentUsers(1).to(3000).during(15)
+//                                        rampConcurrentUsers(1).to(300).during(15)
 //                        STEPS:
-//                        incrementConcurrentUsers(INCREMENT_USERS)
-//                                .times(STEPS_COUNT)
-//                                .eachLevelLasting(STEP_TIME)
-//                                .separatedByRampsLasting(STEP_TIME)
-//                                .startingFrom(0)
+                                        incrementConcurrentUsers(INCREMENT_USERS)
+                                                .times(STEPS_COUNT)
+                                                .eachLevelLasting(STEP_TIME)
+                                                .separatedByRampsLasting(STEP_TIME)
+                                                .startingFrom(0)
                                 ))
                         .andThen(
                                 finalScenario.injectOpen(
@@ -154,7 +154,7 @@ public class PaymentServiceSimulation extends Simulation {
 
         if (IP_NOT_DEFINED_ERROR.equals(API_GATEWAY_IP)) {
             System.out.println("API Gateway IP is not defined. Exit tests");
-//            System.exit(0);
+            System.exit(0);
         }
     }
 }

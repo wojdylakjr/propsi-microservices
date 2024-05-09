@@ -70,13 +70,13 @@ public class PropertyServiceSimulation extends Simulation {
         setUp(
                 scn.injectClosed(
 //                        LINEAR:
-                        rampConcurrentUsers(1).to(1).during(15)
+//                        rampConcurrentUsers(1).to(1).during(15)
 //                        STEPS:
-//                        incrementConcurrentUsers(INCREMENT_USERS)
-//                                .times(STEPS_COUNT)
-//                                .eachLevelLasting(STEP_TIME)
-//                                .separatedByRampsLasting(STEP_TIME)
-//                                .startingFrom(0)
+                        incrementConcurrentUsers(INCREMENT_USERS)
+                                .times(STEPS_COUNT)
+                                .eachLevelLasting(STEP_TIME)
+                                .separatedByRampsLasting(STEP_TIME)
+                                .startingFrom(0)
                 )
         ).protocols(httpProtocol);
     }
@@ -89,7 +89,7 @@ public class PropertyServiceSimulation extends Simulation {
 
         if (IP_NOT_DEFINED_ERROR.equals(API_GATEWAY_IP)) {
             System.out.println("API Gateway IP is not defined. Exit tests");
-//            System.exit(0);
+            System.exit(0);
         }
     }
 }
