@@ -70,13 +70,13 @@ public class PropertyServiceSimulation extends Simulation {
         setUp(
                 scn.injectClosed(
 //                        LINEAR:
-//                        rampConcurrentUsers(1).to(1).during(15)
+                        rampConcurrentUsers(INCREMENT_USERS).to(INCREMENT_USERS).during(RAMP_DURATION)
 //                        STEPS:
-                        incrementConcurrentUsers(INCREMENT_USERS)
-                                .times(STEPS_COUNT)
-                                .eachLevelLasting(STEP_TIME)
-                                .separatedByRampsLasting(STEP_TIME)
-                                .startingFrom(0)
+//                        incrementConcurrentUsers(INCREMENT_USERS)
+//                                .times(STEPS_COUNT)
+//                                .eachLevelLasting(STEP_TIME)
+//                                .separatedByRampsLasting(STEP_TIME)
+//                                .startingFrom(0)
                 )
         ).protocols(httpProtocol);
     }
