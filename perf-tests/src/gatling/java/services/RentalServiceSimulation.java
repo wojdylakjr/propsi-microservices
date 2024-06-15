@@ -58,15 +58,15 @@ public class RentalServiceSimulation extends Simulation {
 
     //Scenario definition
     private final ScenarioBuilder scn = scenario("Rental service perf test")
-            .exec(getAllRentals)
-            .pause(PAUSE_TIME_IN_SECONDS)
+//            .exec(getAllRentals)
+//            .pause(PAUSE_TIME_IN_SECONDS)
             .exec(createRental)
             .pause(PAUSE_TIME_IN_SECONDS)
             .exec(getRentalById)
             .pause(PAUSE_TIME_IN_SECONDS)
             .exec(createBill)
-            .pause(PAUSE_TIME_IN_SECONDS)
-            .exec(getAllBills)
+//            .pause(PAUSE_TIME_IN_SECONDS)
+//            .exec(getAllBills)
             .pause(PAUSE_TIME_IN_SECONDS)
             .exec(deleteRentalById);
 
