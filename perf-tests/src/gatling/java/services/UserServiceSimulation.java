@@ -85,7 +85,7 @@ public class UserServiceSimulation extends Simulation {
                 scn.injectClosed(
                         constantConcurrentUsers(START_USERS_COUNT).during(240),
                         rampConcurrentUsers(START_USERS_COUNT).to(END_USERS_COUNT).during(60),
-                        constantConcurrentUsers(END_USERS_COUNT).during(780),
+                        constantConcurrentUsers(END_USERS_COUNT).during(900),
                         rampConcurrentUsers(END_USERS_COUNT).to(START_USERS_COUNT).during(60),
                         constantConcurrentUsers(START_USERS_COUNT).during(600)
                 )
