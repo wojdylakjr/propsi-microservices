@@ -7,7 +7,7 @@ terraform {
   }
 }
 provider "google" {
-  project = "propsi"
+  project = "propsi-425511"
   region  = "europe-central2"
   zone    = "europe-central2-a"
 }
