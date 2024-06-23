@@ -1,5 +1,7 @@
 package pl.wojdylak.paymentservice.client;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import lombok.AllArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +20,7 @@ import pl.wojdylak.paymentservice.domain.payu.PayUTokenResponse;
 public class PayUClient {
     private static final String PAYU_URL = "https://secure.snd.payu.com/";
     private final RestTemplate restTemplate;
+    private final MeterRegistry meterRegistry;
 
     public PayUTokenResponse authenticate(String clientId,
                                           String clientSecret) {
@@ -28,11 +31,16 @@ public class PayUClient {
         ParameterizedTypeReference<PayUTokenResponse> responseType = new ParameterizedTypeReference<>() {
         };
 
-        return send(HttpMethod.GET,
-                url,
-                responseType,
-                null,
-                null);
+        Timer.Sample sample = Timer.start(meterRegistry);
+        try {
+            return send(HttpMethod.GET,
+                    url,
+                    responseType,
+                    null,
+                    null);
+        } finally {
+            sample.stop(meterRegistry.timer("payu.authenticate.time"));
+        }
     }
 
     public PayUAddOrderResponse addOrder(PayUOrderRequest request,
@@ -46,11 +54,16 @@ public class PayUClient {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         headers.set("Authorization", "Bearer " + accessToken);
-        return send(HttpMethod.POST,
-                url,
-                responseType,
-                request,
-                headers);
+        Timer.Sample sample = Timer.start(meterRegistry);
+        try {
+            return send(HttpMethod.POST,
+                    url,
+                    responseType,
+                    request,
+                    headers);
+        } finally {
+            sample.stop(meterRegistry.timer("payu.add_order.time"));
+        }
     }
 
     private <T> T send(HttpMethod httpMethod,
