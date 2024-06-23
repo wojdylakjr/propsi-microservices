@@ -67,30 +67,30 @@ public class UserServiceSimulation extends Simulation {
 //    }
 
     //2 steps up
-//    {
-//        setUp(
-//                scn.injectClosed(
-//                        incrementConcurrentUsers(INCREMENT_USERS)
-//                                .times(STEPS_COUNT)
-//                                .eachLevelLasting(STEP_TIME)
-//                                .separatedByRampsLasting(STEP_TIME)
-//                                .startingFrom(0)
-//                )
-//        ).protocols(httpProtocol);
-//    }
-
-    // 3 scale up and down
     {
         setUp(
                 scn.injectClosed(
-                        constantConcurrentUsers(START_USERS_COUNT).during(240),
-                        rampConcurrentUsers(START_USERS_COUNT).to(END_USERS_COUNT).during(60),
-                        constantConcurrentUsers(END_USERS_COUNT).during(900),
-                        rampConcurrentUsers(END_USERS_COUNT).to(START_USERS_COUNT).during(60),
-                        constantConcurrentUsers(START_USERS_COUNT).during(600)
+                        incrementConcurrentUsers(INCREMENT_USERS)
+                                .times(STEPS_COUNT)
+                                .eachLevelLasting(STEP_TIME)
+                                .separatedByRampsLasting(STEP_TIME)
+                                .startingFrom(0)
                 )
         ).protocols(httpProtocol);
     }
+
+    // 3 scale up and down
+//    {
+//        setUp(
+//                scn.injectClosed(
+//                        constantConcurrentUsers(START_USERS_COUNT).during(240),
+//                        rampConcurrentUsers(START_USERS_COUNT).to(END_USERS_COUNT).during(60),
+//                        constantConcurrentUsers(END_USERS_COUNT).during(900),
+//                        rampConcurrentUsers(END_USERS_COUNT).to(START_USERS_COUNT).during(60),
+//                        constantConcurrentUsers(START_USERS_COUNT).during(600)
+//                )
+//        ).protocols(httpProtocol);
+//    }
 
     @Override
     public void before() {
